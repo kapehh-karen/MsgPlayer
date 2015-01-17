@@ -17,11 +17,17 @@ import java.util.List;
  */
 public class Main extends JavaPlugin {
 
-    private void sendMessagePlayers(World world, String[] args) {
+    private String setColorChar(String msg) {
+        return msg.replace('&', ChatColor.COLOR_CHAR).replace("" + ChatColor.COLOR_CHAR + ChatColor.COLOR_CHAR, "&");
+    }
+
+    private String sendMessagePlayers(World world, String[] args) {
         List<Player> playerList = world.getPlayers();
+        String msg = setColorChar(StringUtils.join(args, ' ', 1, args.length));
         for (Player p : playerList) {
-            p.sendMessage(StringUtils.join(args, ' ', 1, args.length - 1));
+            p.sendMessage(msg);
         }
+        return msg;
     }
 
     @Override
@@ -38,7 +44,7 @@ public class Main extends JavaPlugin {
                     return false;
                 }
 
-                String playerName = args[1];
+                String playerName = args[0];
                 Player[] players = Bukkit.getOnlinePlayers();
                 World worldMessage = null;
                 for (Player p : players) {
@@ -52,7 +58,7 @@ public class Main extends JavaPlugin {
                     return true;
                 }
 
-                sendMessagePlayers(worldMessage, args);
+                getLogger().info("To " + worldMessage.getName() + ": " + sendMessagePlayers(worldMessage, args));
                 return true;
             }
         });
@@ -68,7 +74,7 @@ public class Main extends JavaPlugin {
                     return false;
                 }
 
-                String worldName = args[1];
+                String worldName = args[0];
                 World worldMessage = Bukkit.getWorld(worldName);
 
                 if (worldMessage == null) {
@@ -76,7 +82,7 @@ public class Main extends JavaPlugin {
                     return true;
                 }
 
-                sendMessagePlayers(worldMessage, args);
+                getLogger().info("To " + worldMessage.getName() + ": " + sendMessagePlayers(worldMessage, args));
                 return true;
             }
         });
