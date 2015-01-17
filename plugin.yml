@@ -1,0 +1,13 @@
+name: MsgPlayer
+main: me.kapehh.MsgPlayer.Main
+author: kapehh
+version: 1.0.0
+commands:
+    msgplayer:
+        usage: /<command> <player> <message>
+        description: MsgPlayer
+        aliases: msgp
+    msgworld:
+        usage: /<command> <world> <message>
+        description: MsgPlayer
+        aliases: msgw
