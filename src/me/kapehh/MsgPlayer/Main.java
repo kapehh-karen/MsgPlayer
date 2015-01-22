@@ -58,7 +58,7 @@ public class Main extends JavaPlugin {
                     return true;
                 }
 
-                getLogger().info("To " + worldMessage.getName() + ": " + sendMessagePlayers(worldMessage, args));
+                sendMessagePlayers(worldMessage, args);
                 return true;
             }
         });
@@ -82,7 +82,7 @@ public class Main extends JavaPlugin {
                     return true;
                 }
 
-                getLogger().info("To " + worldMessage.getName() + ": " + sendMessagePlayers(worldMessage, args));
+                sendMessagePlayers(worldMessage, args);
                 return true;
             }
         });
