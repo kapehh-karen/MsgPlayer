@@ -21,13 +21,16 @@ public class Main extends JavaPlugin {
         return msg.replace('&', ChatColor.COLOR_CHAR).replace("" + ChatColor.COLOR_CHAR + ChatColor.COLOR_CHAR, "&");
     }
 
-    private String sendMessagePlayers(World world, String[] args) {
+    private void sendMessagePlayer(Player player, String[] args) {
+        player.sendMessage(setColorChar(StringUtils.join(args, ' ', 1, args.length)));
+    }
+
+    private void sendMessagePlayers(World world, String[] args) {
         List<Player> playerList = world.getPlayers();
         String msg = setColorChar(StringUtils.join(args, ' ', 1, args.length));
         for (Player p : playerList) {
             p.sendMessage(msg);
         }
-        return msg;
     }
 
     @Override
@@ -62,6 +65,7 @@ public class Main extends JavaPlugin {
                 return true;
             }
         });
+
         getCommand("msgworld").setExecutor(new CommandExecutor() {
             @Override
             public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
@@ -83,6 +87,37 @@ public class Main extends JavaPlugin {
                 }
 
                 sendMessagePlayers(worldMessage, args);
+                return true;
+            }
+        });
+
+        getCommand("msg2player").setExecutor(new CommandExecutor() {
+            @Override
+            public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+                if (!sender.isOp()) {
+                    sender.sendMessage("You need OP!");
+                    return true;
+                }
+
+                if (args.length < 2) {
+                    return false;
+                }
+
+                String playerName = args[0];
+                Player[] players = Bukkit.getOnlinePlayers();
+                Player playerMessage = null;
+                for (Player p : players) {
+                    if (p.getName().equals(playerName)) {
+                        playerMessage = p;
+                    }
+                }
+
+                if (playerMessage == null) {
+                    sender.sendMessage(ChatColor.RED + "Player '" + playerName + "' not found.");
+                    return true;
+                }
+
+                sendMessagePlayer(playerMessage, args);
                 return true;
             }
         });

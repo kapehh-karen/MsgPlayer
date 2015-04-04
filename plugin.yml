@@ -11,3 +11,7 @@ commands:
         usage: /<command> <world> <message>
         description: MsgPlayer
         aliases: msgw
+    msg2player:
+        usage: /<command> <player> <message>
+        description: MsgPlayer
+        aliases: msg2p
