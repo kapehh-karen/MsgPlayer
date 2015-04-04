@@ -18,7 +18,23 @@ import java.util.List;
 public class Main extends JavaPlugin {
 
     private String setColorChar(String msg) {
-        return msg.replace('&', ChatColor.COLOR_CHAR).replace("" + ChatColor.COLOR_CHAR + ChatColor.COLOR_CHAR, "&");
+        return msg.replace('&', ChatColor.COLOR_CHAR)
+                .replace("" + ChatColor.COLOR_CHAR + ChatColor.COLOR_CHAR, "&")
+                .replace("%online%", getListPlayers());
+    }
+
+    private String getListPlayers() {
+        StringBuilder stringBuilder = new StringBuilder();
+        Player[] players = Bukkit.getOnlinePlayers();
+        boolean first = true;
+        for (Player p : players) {
+            if (!first) {
+                stringBuilder.append(' ');
+            }
+            stringBuilder.append(p.getName());
+            first = false;
+        }
+        return stringBuilder.toString();
     }
 
     private void sendMessagePlayer(Player player, String[] args) {
